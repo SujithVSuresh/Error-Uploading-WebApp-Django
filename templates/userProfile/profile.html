@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-3 col-sm-6">
+            <a href="{% url 'error-listing' %}" class="btn btn-light">Back to Feed</a>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="card shadow-sm col-md-8 col-sm-12 border-bottom px-5 pt-3">
+    <div class="text-center">
+          <img src="" class="rounded-circle" width="100" height="100">
+
+          {% if profile.name %}
+          <h3 class="py-4">{{ profile.name }}</h3>
+              <span>
+                  {% if request.user == profile.user_name %}
+                      <a href="" style="color: #333;"><i class="far fa-edit"></i></a>
+                   {% else %}
+                   <div class="row justify-content-center">
+                    {% if is_following == True %}
+                    <form method="POST", action="{% url 'remove-follower' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">Unfollow</button>
+                    </form>
+                    {% else %}
+                    <form method="POST", action="{% url 'add-follower' profile.pk %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-success" type="submit">follow</button>
+                    </form>
+                    {% endif %}
+
+                 </div>
+           
+                  {% endif %}
+              </span>
+              {% else %}
+              <h3 class="py-4">{{ request.user.username }}</h3>
+              <span>
+                {% if request.user == profile.user_name %}
+                    <a href="" style="color: #333;"><i class="far fa-edit"></i></a>
+                {% endif %}
+            </span>
+          {% endif %}
+        <h5>Followers: {{followers_count}}</h5>
+    </div>
+          {% if profile.birthday %}
+          <p>{{ profile.birthday }}</p>
+          {% endif %}
+
+          {% if profile.bio %}
+          <p>{{ profile.bio }}</p>
+          {% endif %}
+
+          {% if profile.location %}
+          <p>{{ profile.location }}</p>
+          {% endif %}
+        </div>
+
+    </div>
+
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <!--Button-->
+    <div class="row mt-5">
+      {% if errors.mode == 'Private' %}
+        <div class="col-md-3">
+            <a href="{% url 'error-listing' %}" class="btn btn-light">Back to Home</a>
+        </div>
+      {% elif errors.mode == 'Public' %}
+        <div class="col-md-3">
+            <a href="{% url 'social-error-listing' %}" class="btn btn-light">Back to Social</a>
+        </div>
+      {% endif %}
+
+    </div>
+
+    <div class="row justify-content-center mt-5">
+        <div class="card" style="width: 40rem;">
+            <div class="card-body">
+              <b style="color: blueviolet;">Error:</b>
+              <h5 class="card-title">{{errors.error_body}}</h5>
+              <b style="color: blueviolet;">Error Description:</b>
+              <p class="card-text">{{errors.error_description}}</p>
+              <b style="color: blueviolet;">Error Reason:</b>
+              <p class="card-text">{{errors.error_reason}}</p>
+              <b style="color: blueviolet;">Error Solution:</b>
+              <p class="card-text">{{errors.error_solution}}</p>
+              {% if request.user == errors.author %}
+              <a href="{% url 'error-delete' errors.pk %}"><i class="fas fa-trash-alt"></i></a>
+              <a href="{% url 'error-edit' errors.pk %}"><i class="far fa-edit"></i></a>
+              {% else %}
+              <small style="color: black">Posted by:</small>
+              <a href="{% url 'user-profile' errors.author.profile.pk %}"><p class="card-text">{{author_profile.user_name}}</p></a>
+              {% endif %}
+              <small style="color: black">Posted on:</small>
+              <p class="card-text">{{errors.created_on}}</p>
+            </div>
+          </div>
+    </div>
+
+</div>
+{% endblock content %}

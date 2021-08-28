@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <!--Button-->
+ 
+    <div class="row mt-5">
+        <div class="col-md-3">
+            <a href="" class="btn btn-light">Social</a>
+        </div>
+        <div class="col-md-6">
+            {% csrf_token %}
+            <form method="GET" action="" class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" name="query" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <a href="{% url 'error-upload' %}" class="btn btn-light">Add Error</a>
+        </div>
+    </div>
+
+
+    {% for error in error_post %}
+    <div class="row justify-content-center mt-5">
+        <div class="card" style="width: 40rem;">
+            <div class="card-body position-relative">
+              <b style="color: blueviolet;">Error:</b>
+              <h5 class="card-title">{{error.error_body}}</h5>
+              <b style="color: blueviolet;">Error Description:</b>
+              <p class="card-text">{{error.error_description}}</p>
+              <a href="{% url 'error-detail' error.pk %}" class="stretched-link"></a>
+            </div>
+           
+            <div class="d-flex flex-row">
+                <form method="POST" action="{% url 'add-like' error.pk %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                    <button style="background-color: transparent; border: none; box-shadow:none;">
+                        <i class="far fa-thumbs-up"><span>{{ error.like.count }}</span></i>
+                    </button>
+                </form>
+
+                <form method="POST" action="{% url 'add-dislike' error.pk %}">
+                 {% csrf_token %}
+                 <input type="hidden" name="next" value="{{ request.path }}">
+                 <button style="background-color: transparent; border: none; box-shadow:none;">
+                     <i class="far fa-thumbs-down">{{ error.dislike.count }}</i>
+                 </button>
+                </form>
+            </div>
+      
+        </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock content %}

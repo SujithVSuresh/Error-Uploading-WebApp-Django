@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <!--Button-->
+    <div class="row mt-5">
+        <div class="col-md-3">
+            <a href="{% url 'error-listing' %}" class="btn btn-light">Back to home</a>
+        </div>
+    </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content %}
