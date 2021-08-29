@@ -91,9 +91,9 @@ WSGI_APPLICATION = 'spyderror.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SPYDERROR_DB',
+        'NAME': '',
         'USER': 'postgres',
-        'PASSWORD': 'vavanikunnel123',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT':'5432'
     }
